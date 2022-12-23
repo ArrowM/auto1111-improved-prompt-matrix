@@ -59,7 +59,6 @@ class Script(scripts.Script):
         p.prompt = all_prompts * p.n_iter
         p.seed = [item for item in range(int(p.seed), int(p.seed) + p.n_iter) for _ in range(len(all_prompts))]
         p.n_iter = total_images
-        p.do_not_save_grid = True
         p.prompt_for_display = original_prompt
 
         return process_images(p)
