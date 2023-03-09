@@ -5,6 +5,7 @@ import modules.scripts as scripts
 import modules.sd_samplers
 from modules.processing import process_images, StableDiffusionProcessingTxt2Img
 
+rex = r'(<(?!lora:)([^>]+)>)'
 
 class Script(scripts.Script):
     def title(self):
@@ -21,7 +22,7 @@ class Script(scripts.Script):
 
         matrix_count = 0
         prompt_matrix_parts = []
-        for data in re.finditer(r'(<([^>]+)>)', original_prompt):
+        for data in re.finditer(rex, original_prompt):
             if data:
                 matrix_count += 1
                 span = data.span(1)
@@ -32,7 +33,7 @@ class Script(scripts.Script):
         while True:
             found_matrix = False
             for this_prompt in all_prompts:
-                for data in re.finditer(r'(<([^>]+)>)', this_prompt):
+                for data in re.finditer(rex, this_prompt):
                     if data:
                         found_matrix = True
                         # Remove last prompt as it has a found_matrix
